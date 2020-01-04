@@ -1,0 +1,3 @@
+/home/atas/PointNet_Custom_Object_Detection/scripts/build/CMakeFiles/rebuild_cache.dir
+/home/atas/PointNet_Custom_Object_Detection/scripts/build/CMakeFiles/convert_pcd2ply.dir
+/home/atas/PointNet_Custom_Object_Detection/scripts/build/CMakeFiles/edit_cache.dir
