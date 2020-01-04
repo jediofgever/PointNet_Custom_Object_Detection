@@ -1,11 +1,72 @@
-## 3D Semantic Segmentation of virtual kitti dataset using PointNet
+## 3D detecion of custom objects using PointNet
 
 The main code is from <a href="https://github.com/charlesq34/pointnet" target="_blank">PointNet GitHub Repo<a>
+Main aim of this projects is to show case how to use PointNet for custom object detection. 
 
 ### Dataset
-You can download the dataset from <a href="https://github.com/VisualComputingInstitute/vkitti3D-dataset" target="_blank">here</a>. 
+This project uses real data captured from Intel RealSense D435 depth camera. 
+Tricky part is; Pointnet can accept number of points as power of 1024. 
+So depending on the speed and accuracy that best works for the appliction you aim, 
+number of points should be NX1024.
 
-All files are provided as numpy .npy files. Each file contains a N x F matrix, where N is the number of points in a scene and F is the number of features per point, in this case F=7. The features are XYZRGBL, the 3D XYZ position, the RGB color and the ground truth semantic label L. Each file is for a scene. 
+#### pre-process data
+In this project we take N to be 4, so point clouds are pre-processed to have exactly 4096 points.
+This is achieved using PCL's utilities. First strategy is removing ground plane. 
+
+```cpp
+void PointCloudManager::removeGroundPlane(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud,
+                                                            pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_filtered) {
+    pcl::PointIndicesPtr ground(new pcl::PointIndices);
+
+    pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients);
+    pcl::PointIndices::Ptr inliers(new pcl::PointIndices);
+    pcl::ExtractIndices<pcl::PointXYZRGB> extract;
+
+    // Create the segmentation object
+    pcl::SACSegmentation<pcl::PointXYZRGB> seg;
+    // Optional
+    seg.setOptimizeCoefficients(true);
+    // Mandatory
+    seg.setModelType(pcl::SACMODEL_PLANE);
+    seg.setMethodType(pcl::SAC_RANSAC);
+    seg.setDistanceThreshold(0.01);
+
+    seg.setInputCloud(cloud);
+    seg.segment(*inliers, *coefficients);
+
+    extract.setInputCloud(cloud);
+    extract.setIndices(inliers);
+    extract.setNegative(true);
+    extract.filter(*cloud_filtered);
+
+    cloud_filtered->header = cloud->header;
+    cloud_filtered->height = 1;
+    cloud_filtered->width = cloud_filtered->points.size();
+    ROS_INFO("x %.2f y %.2f z %.2f c %.2f", coefficients->values[0], coefficients->values[1], coefficients->values[2],
+             coefficients->values[3]);    
+}
+```
+
+This will remove ground plane, next thing we can check number of points and if still far from Nx4096 points we can down sample cloud with;
+
+```cpp 
+void PointCloudManager::downsamplePCL(pcl::PCLPointCloud2::Ptr cloud, pcl::PCLPointCloud2::Ptr cloud_filtered) {
+    // Create the filtering object
+    pcl::VoxelGrid<pcl::PCLPointCloud2> sor;
+    sor.setInputCloud(cloud);
+    sor.setLeafSize(0.008f, 0.008f, 0.008f);
+    sor.filter(*cloud_filtered);
+}
+```
+The leafsize parameter needs to be adjusted such that it will get as close as possible to N*4096
+finally after this we can trim reamining few points such as ;
+
+```cpp
+while (downsampled_cloud_PointCloud->points.size() > 4096) {
+    downsampled_cloud_PointCloud->points.pop_back();
+}
+```
+
 
 ### Training
 
