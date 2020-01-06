@@ -40,7 +40,7 @@ The training will hold on According to number of epochs and after each epoch the
 
 ### Testing
 Testing is again done in ipython notebook. direct to test.ipynb under root of project directory,
-the test data prodiced by augmenttaion script is used to test model. test.h5 includes same number of frames as real_data.h5. dependin n the frame you want to test change "frame_to_test" parameter in test.ipynb
+the test data produced by augmenttaion script is used to test model. test.h5 includes same number of frames as real_data.h5. dependin n the frame you want to test change "frame_to_test" parameter in test.ipynb
 
 For example I got following performance on 56'th frame;
 ```cpp
@@ -48,7 +48,15 @@ eval mean loss: 0.023177
 eval accuracy: 0.990967
 eval avg class acc: 0.970006
 ```
+test.ipynb will dumb 2 mesh files under log folder, ground truth and prediction, (frame_num)_gt.obj and (frame_num)_pred.obj
+### Visualizing results
+Using meshlab or another cad software we can visualize the output of network using dumped .obj files under log. Here are some detection results. 
+AT left Ground truths and at right predictions.
 
+![.](log//1.png)
+![.](log//2.png)
+![.](log//3.png)
+![.](log//4.png)
 
 
 ### Selected Projects that Use PointNet

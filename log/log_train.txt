@@ -1,5 +1,5 @@
 Model restored.
 ----
-eval mean loss: 0.023177
-eval accuracy: 0.990967
-eval avg class acc: 0.970006
+eval mean loss: 0.029470
+eval accuracy: 0.988770
+eval avg class acc: 0.993760
