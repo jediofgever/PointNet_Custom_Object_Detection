@@ -15,36 +15,40 @@ number of points should be NX1024.
 from a depth camera or anything that provides pointcloud data, I write a detailed tutorial [here](PREPARE_DATA.md) on how to collect, pre-process, label data and finally make it ready for PointNet to consume.
 
 #### if you want to use real data that I collect and labeled :
-Download the .h5 file [here](https://drive.google.com/open?id=10CUXVLeIvodVYnCgs1bf1cvz3h2xVdw2). this data consists of 60 frames of labeled data. Now we shall augment this real data with the script "scripts/augment_real_data.py". Make sure that you adjust the correct path to real_data.h5 file by placing it under data folder.
-if not installed open3d , 
-do with;
+Download the .h5 file [here](https://drive.google.com/open?id=10CUXVLeIvodVYnCgs1bf1cvz3h2xVdw2). This data consists of 60 frames of labeled point cloud data captured from Realsense D435. Now we can augment this real data with the script "augment_real_data.py".  real_data.h5 file should be under data folder.
+this script uses open3d for reading and processing pointcloud data, 
+install open3d with;
 > pip3 install open3d
 
 and then augment data with; 
 
 > python3 augment_real_data.py
 
-After this command there should be 5 additional .h5 file starting with f under data folder. Rename all this files maunally such as; d0.h5, d1.h5 ... ,d5.h5 so that we can iterate through them easily. 
-
+After this command, there should be 6 additional .h5 files under data folder one particularly for testing. Except test.h5, Rename all  files maunally such as; d0.h5, d1.h5 ... ,d5.h5 so that we can iterate through them easily in training part. 
 
 ### Training
 Training script is a ipython notebook.
-After augmentation step we should have 5 files starting with f and real_dataset with .h5 extensions.
-to iterate through this files conviently put them under a directory, which you need to adjust in train.ipynb, for example I renemad the final files to d0,d1...d5
-and the name of directory is FULL_H5_DATA.
-
-Also remeber to adjust number of frames to the same number that you set in write_pyh5_real.py 
+After augmentation step we should have total of 6 .h5 data files under data folder.
 
 ```cpp
 ipython notebook 
 ```
-direct to train.ipynb, 
+direct to train.ipynb under root of project directory, 
 
-and run each cell, make sure you dont recieve an error,
-According to number of epochs the training will hold on. 
+and run each cell, make sure you dont recieve an error.
+The training will hold on According to number of epochs and after each epoch the model will be saved in model.ckpt under log directory.
 
 ### Testing
-Testing is again done in ipython notebook. 
+Testing is again done in ipython notebook. direct to test.ipynb under root of project directory,
+the test data prodiced by augmenttaion script is used to test model. test.h5 includes same number of frames as real_data.h5. dependin n the frame you want to test change "frame_to_test" parameter in test.ipynb
+
+For example I got following performance on 56'th frame;
+```cpp
+eval mean loss: 0.023177
+eval accuracy: 0.990967
+eval avg class acc: 0.970006
+```
+
 
 
 ### Selected Projects that Use PointNet

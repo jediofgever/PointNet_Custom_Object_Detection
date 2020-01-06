@@ -43,6 +43,8 @@ f_scale_up_xyz = h5py.File('../data/f_scale_up_xyz.h5','w')
 f_light_up_colors = h5py.File('../data/f_light_up_colors.h5','w')
 f_light_down_colors = h5py.File('../data/f_light_down_colors.h5','w')
 f_random_rotate = h5py.File('../data/f_random_rotate.h5','w')
+f_random_rotate_for_testing = h5py.File('../data/test.h5','w')
+
 
 print(len(data))
 for i in range (0, len(data)):
@@ -73,11 +75,17 @@ for i in range (0, len(data)):
 f_light_down_colors.create_dataset('data', data = augmented_data)
 f_light_down_colors.create_dataset('label', data = true_labels)
 
-rotated_data = rotate_point_cloud(true_data[:,:,0:3])
-augmented_data[:,:,0:3] =  rotated_data
+random_rotated_data = rotate_point_cloud(true_data[:,:,0:3])
+augmented_data[:,:,0:3] =  random_rotated_data
 augmented_data[:,:,3:6] =  true_data[:,:,3:6]
 f_random_rotate.create_dataset('data', data = augmented_data)
 f_random_rotate.create_dataset('label', data = true_labels)
+
+random_rotated_data_for_testing = rotate_point_cloud(true_data[:,:,0:3])
+augmented_data[:,:,0:3] =  random_rotated_data_for_testing
+augmented_data[:,:,3:6] =  true_data[:,:,3:6]
+f_random_rotate_for_testing.create_dataset('data', data = augmented_data)
+f_random_rotate_for_testing.create_dataset('label', data = true_labels)
 
 
 
