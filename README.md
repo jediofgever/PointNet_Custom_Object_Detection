@@ -11,12 +11,20 @@ Tricky part is; Pointnet can accept number of points as power of 1024.
 So depending on the speed and accuracy that best works for the appliction you aim, 
 number of points should be NX1024.
 
-#### If you want to collect your own data{
+#### If you want to collect your own data:
 from a depth camera or anything that provides pointcloud data, I write a detailed tutorial [here](PREPARE_DATA.md) on how to collect, pre-process, label data and finally make it ready for PointNet to consume.
-}
-#### if you want to use real data I prepared {
 
-}
+#### if you want to use real data that I collect and labeled :
+Download the .h5 file [here](https://drive.google.com/open?id=10CUXVLeIvodVYnCgs1bf1cvz3h2xVdw2). this data consists of 60 frames of labeled data. Now we shall augment this real data with the script "scripts/augment_real_data.py". Make sure that you adjust the correct path to real_data.h5 file by placing it under data folder.
+if not installed open3d , 
+do with;
+> pip3 install open3d
+
+and then augment data with; 
+
+> python3 augment_real_data.py
+
+After this command there should be 5 additional .h5 file starting with f under data folder. Rename all this files maunally such as; d0.h5, d1.h5 ... ,d5.h5 so that we can iterate through them easily. 
 
 
 ### Training

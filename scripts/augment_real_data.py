@@ -7,7 +7,7 @@ import random
 
 from plyfile import PlyData, PlyElement
 import h5py
-f = h5py.File('real_data.h5','r')
+f = h5py.File('../data/real_data.h5','r')
 
 def rotate_point_cloud(batch_data):
   """ Randomly rotate the point clouds to augument the dataset
@@ -38,11 +38,11 @@ augmented_data = np.zeros((len(data),len(data[0]),len(data[0][0])))
 true_data = data
 true_labels = label
 
-f_scale_down_xyz = h5py.File('f_scale_down_xyz.h5','w')
-f_scale_up_xyz = h5py.File('f_scale_up_xyz.h5','w')
-f_light_up_colors = h5py.File('f_light_up_colors.h5','w')
-f_light_down_colors = h5py.File('f_light_down_colors.h5','w')
-f_random_rotate = h5py.File('f_random_rotate.h5','w')
+f_scale_down_xyz = h5py.File('../data/f_scale_down_xyz.h5','w')
+f_scale_up_xyz = h5py.File('../data/f_scale_up_xyz.h5','w')
+f_light_up_colors = h5py.File('../data/f_light_up_colors.h5','w')
+f_light_down_colors = h5py.File('../data/f_light_down_colors.h5','w')
+f_random_rotate = h5py.File('../data/f_random_rotate.h5','w')
 
 print(len(data))
 for i in range (0, len(data)):
