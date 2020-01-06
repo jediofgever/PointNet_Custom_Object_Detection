@@ -7,11 +7,13 @@ Left: Ground Truth, Right: Predictions
 The main code is from <a href="https://github.com/charlesq34/pointnet" target="_blank">PointNet GitHub Repo<a>
 
 The code has been tested under following envoirenment;
+```cpp
 * Ubuntu 18.04 LTS
 * Python 3.6.9
 * Tensorflow 1.14.0
 * CUDA 10.0
 * Cudnn 7.6.2
+```
 
 There is few dependencies, h5py, open3d, numpy etc. It is suggested to install them via pip3
 
