@@ -1,15 +1,23 @@
 ## 3D detecion of custom objects using PointNet
-Left: Ground Truth, Right: Predcitions
+Left: Ground Truth, Right: Predictions
 ![.](log//teaser.png)
 
 
 
 The main code is from <a href="https://github.com/charlesq34/pointnet" target="_blank">PointNet GitHub Repo<a>
-Main aim of this projects is to show case how to use PointNet for custom object detection. 
+
+The code has been tested under following envoirenment;
+* Ubuntu 18.04 LTS
+* Python 3.6.9
+* Tensorflow 1.14.0
+* CUDA 10.0
+* Cudnn 7.6.2
+
+There is few dependencies, h5py, open3d, numpy etc. It is suggested to install them via pip3
 
 ### Dataset
 
-Bored of seeing same datasets all over the place ? , seriously I am, I encourge you to collect your own data and train on it, only then it can feel real. 
+Bored of seeing same datasets all over the place ? , seriously I am, I encourge you to collect your own data and train on it,  then it starts to feel real. 
 So this project uses real data captured from Intel RealSense D435 depth camera. 
 Tricky part is; Pointnet can accept number of points as power of 1024. 
 So depending on the speed and accuracy that best works for the appliction you aim, 
