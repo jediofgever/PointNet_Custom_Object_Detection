@@ -1,4 +1,8 @@
 ## 3D detecion of custom objects using PointNet
+Left: Ground Truth, Right: Predcitions
+![.](log//teaser.png)
+
+
 
 The main code is from <a href="https://github.com/charlesq34/pointnet" target="_blank">PointNet GitHub Repo<a>
 Main aim of this projects is to show case how to use PointNet for custom object detection. 
